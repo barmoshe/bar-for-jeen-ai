@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap, useGSAP, FULL_MOTION_QUERY } from '../../lib/gsap';
 import JeenMark from './JeenMark';
 import GovernedAnswer from './GovernedAnswer';
@@ -9,13 +9,14 @@ import './jeen-ai.css';
 
 /**
  * JeenApp — an ad-hoc, personalized application page for Bar Moshe's
- * "Full Stack Engineer" application to Jeen.AI (R&D, Tel Aviv). Built in a
- * visual language interpreted from Jeen's positioning (the enterprise AI
- * operating layer: agents, workflows, governed knowledge, any cloud or
- * air-gapped on-prem): a deep indigo surface, an electric blue-to-violet
- * accent, white type, and a layered-stack mark whose scattered layers converge
- * into one solid layer as the hero scrolls (GSAP ScrollTrigger). It speaks the
- * team's own language and makes the case for Bar inside it.
+ * "Full Stack Engineer" application to Jeen.AI (R&D, Tel Aviv). Built in
+ * Jeen's REAL visual language, read live off jeen.ai (computed styles,
+ * 2026-07-02): cream surface, ink type at display weight 400, 50px pills
+ * (lilac primary, white outline, ink nav pill), a floating white pill nav,
+ * a deep-plum dark band, and the signature hero "liquid" — a pastel
+ * pink/lilac wash revealed through a soft elliptical mask that roams the
+ * hero (their exact mechanism: a JS-animated radial-gradient mask-image,
+ * no WebGL). Replaces the earlier blind interpretation (ADR 0141).
  *
  * English, LTR. Self-contained: mounts `.mp-root` only to inherit the marketing
  * reset / focus base (carried locally as marketing-base.css), then overrides
@@ -304,6 +305,7 @@ const FIT: Fit[] = [
 export default function JeenApp() {
   const scope = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
+  const blobRef = useRef<HTMLDivElement | null>(null);
 
   useGSAP(
     () => {
@@ -319,34 +321,6 @@ export default function JeenApp() {
         delay: 0.08,
       });
 
-      // Signature scroll move: as the hero scrolls away, the scattered layers
-      // drift apart and fade while the single solid layer scales in. Scattered
-      // AI tools converge into one operating layer, tied to scroll progress.
-      const hero = heroRef.current;
-      if (hero) {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: hero,
-            start: 'top top',
-            end: 'bottom 35%',
-            scrub: 0.6,
-          },
-        });
-        tl.to('.ja-mark--hero .ja-mark__layers', {
-          opacity: 0.08,
-          scale: 1.25,
-          transformOrigin: '50% 50%',
-          ease: 'none',
-        }, 0)
-          .fromTo(
-            '.ja-mark--hero .ja-mark__solid',
-            { opacity: 0, scale: 0.55, transformOrigin: '50% 50%' },
-            { opacity: 1, scale: 1, ease: 'none' },
-            0,
-          )
-          .to('.ja-hero__visual', { yPercent: -8, ease: 'none' }, 0);
-      }
-
       // Section reveals: fade-up each marked block as it enters.
       const reveals = gsap.utils.toArray<HTMLElement>('[data-reveal]');
       reveals.forEach((el) => {
@@ -361,6 +335,49 @@ export default function JeenApp() {
     },
     { scope },
   );
+
+  // The hero "liquid": jeen.ai reveals a pastel wash through a soft
+  // elliptical radial-gradient mask whose center is animated from JS. Same
+  // mechanism here: ease toward the pointer while it moves over the hero,
+  // drift on slow sines when idle. Reduced motion: CSS keeps the static
+  // centered mask and this effect never attaches.
+  useEffect(() => {
+    if (!matchMedia(FULL_MOTION_QUERY).matches) return;
+    const hero = heroRef.current;
+    const blob = blobRef.current;
+    if (!hero || !blob) return;
+
+    const pos = { x: 0.5, y: 0.46 };
+    const target = { x: 0.5, y: 0.46 };
+    let lastPointer = 0;
+
+    const onMove = (e: PointerEvent) => {
+      const r = hero.getBoundingClientRect();
+      target.x = (e.clientX - r.left) / r.width;
+      target.y = (e.clientY - r.top) / r.height;
+      lastPointer = performance.now();
+    };
+    hero.addEventListener('pointermove', onMove, { passive: true });
+
+    const tick = () => {
+      const now = performance.now();
+      if (now - lastPointer > 2600) {
+        target.x = 0.5 + 0.28 * Math.sin(now / 4200);
+        target.y = 0.44 + 0.15 * Math.cos(now / 5300);
+      }
+      pos.x += (target.x - pos.x) * 0.045;
+      pos.y += (target.y - pos.y) * 0.045;
+      const mask = `radial-gradient(38rem 24rem at ${(pos.x * 100).toFixed(2)}% ${(pos.y * 100).toFixed(2)}%, #000 0%, transparent 100%)`;
+      blob.style.maskImage = mask;
+      blob.style.webkitMaskImage = mask;
+    };
+    gsap.ticker.add(tick);
+
+    return () => {
+      hero.removeEventListener('pointermove', onMove);
+      gsap.ticker.remove(tick);
+    };
+  }, []);
 
   return (
     <div className="mp-root ja-root" ref={scope}>
@@ -381,7 +398,7 @@ export default function JeenApp() {
           </nav>
           <div className="ja-nav__cta">
             <a className="ja-btn ja-btn--ghost ja-btn--sm" href={CV} target="_blank" rel="noopener noreferrer">Download CV</a>
-            <a className="ja-btn ja-btn--primary ja-btn--sm" href={EMAIL}>
+            <a className="ja-btn ja-btn--ink ja-btn--sm" href={EMAIL}>
               <span className="ja-nav__full">Start a conversation</span>
               <span className="ja-nav__short">Let’s talk</span>
             </a>
@@ -390,10 +407,10 @@ export default function JeenApp() {
       </header>
 
       <main id="main" tabIndex={-1}>
-        {/* ── Hero (dark, converging layers) ────────────────── */}
+        {/* ── Hero (centered over the roaming pastel liquid) ── */}
         <section className="ja-hero" ref={heroRef}>
-          <div className="ja-hero__visual" aria-hidden="true">
-            <JeenMark variant="hero" />
+          <div className="ja-liquid" aria-hidden="true">
+            <div className="ja-liquid__blob" ref={blobRef} />
           </div>
           <div className="ja-hero__inner">
             <div className="ja-hero__copy">
@@ -402,8 +419,9 @@ export default function JeenApp() {
                 FULL STACK ENGINEER APPLICATION · TEL AVIV
               </p>
               <h1 className="ja-title" data-rise>
-                Bar Moshe. Full stack engineer for{' '}
-                <span className="ja-hl">AI products</span>
+                Bar Moshe. Full stack
+                <br />
+                engineer for <span className="ja-hl">AI products</span>
               </h1>
               <p className="ja-lede" data-rise>
                 React, Next.js, TypeScript, and Node across the front end and services.
@@ -425,7 +443,6 @@ export default function JeenApp() {
               </p>
             </div>
           </div>
-          <span className="ja-hero__scroll" aria-hidden="true">scroll</span>
         </section>
 
         {/* ── Trust strip ───────────────────────────────────── */}
@@ -518,8 +535,8 @@ export default function JeenApp() {
           </div>
         </section>
 
-        {/* ── Why Bar, for this role ────────────────────────── */}
-        <section id="fit" className="ja-section ja-section--soft">
+        {/* ── Why Bar, for this role (deep-plum band) ───────── */}
+        <section id="fit" className="ja-section ja-section--plum">
           <div className="ja-wrap">
             <header className="ja-section__head" data-reveal>
               <p className="ja-kicker">Experience and skills</p>
@@ -538,10 +555,10 @@ export default function JeenApp() {
           </div>
         </section>
 
-        {/* ── CTA band (accent gradient) ────────────────────── */}
+        {/* ── Close band (cream, wash-washed, centered) ─────── */}
         <section className="ja-cta">
           <div className="ja-cta__inner" data-reveal>
-            <JeenMark className="ja-cta__mark" />
+            <JeenMark className="ja-cta__mark" float />
             <h2 className="ja-cta__title">Let’s talk.</h2>
             <p className="ja-cta__sub">
               If this background fits the Full Stack Engineer role, I would be glad

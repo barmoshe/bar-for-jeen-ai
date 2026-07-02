@@ -1,44 +1,53 @@
 /* =============================================================
-   /jeen-ai — ad-hoc application page for Bar Moshe -> Jeen.AI
-   (Full Stack Engineer · R&D · Tel Aviv). Visual language interpreted
-   from Jeen's positioning ("The Enterprise AI Operating Layer",
-   sovereign architecture, air-gapped): a deep indigo surface, an
-   electric blue -> violet accent, white type, and a layered-stack mark.
-   NOT read off jeen.ai live (egress + WAF blocked in the build
-   environment, see ADR 0141); tokens are an honest interpretation,
-   ready to be re-pointed at exact brand values in a later pass.
+   bar-for-jeen-ai — ad-hoc application page for Bar Moshe -> Jeen.AI
+   (Full Stack Engineer · R&D · Tel Aviv).
+
+   Brand READ LIVE off jeen.ai (computed styles, 2026-07-02), replacing
+   the earlier blind interpretation (ADR 0141: WAF blocked that session):
+   cream surface #FBF8F6, ink #232122, hairline #EAE4DF, lilac CTA pill
+   #E7B5EA, raspberry #CC3366, plum #63405E / deep plum #331925, amber
+   #F0A653, 50px pills, soft-rounded cards, a floating white pill nav,
+   and a pastel pink/lilac "liquid" wash roaming behind the hero via an
+   animated radial-gradient mask (their exact mechanism — no WebGL).
+   Type: BrittiSans/AktivGrotesk on the real site; Hanken Grotesk + Inter
+   are the free near-matches, display weight 400 like theirs.
+
    Mounts `.mp-root` for the marketing reset/focus base, then overrides
-   everything here. Colours are explicit so the site-wide dark toggle
-   never shifts the brand.
+   everything here. Colours are explicit hex (verified brand values) so
+   nothing site-wide ever shifts them.
    ============================================================= */
 
 .ja-root {
-  --ja-bg:            #070b16;   /* page indigo-black */
-  --ja-bg-1:          #0a0f1d;
-  --ja-bg-2:          #0e1526;   /* raised panel */
-  --ja-bg-3:          #131c33;   /* card / inset */
+  --ja-bg:            #fbf8f6;   /* cream surface */
+  --ja-surface:       #ffffff;   /* raised card */
+  --ja-tint:          #f6f0ec;   /* warm inset tint */
 
-  --ja-ink:           #ffffff;   /* headings */
-  --ja-soft:          #eef1f8;
-  --ja-body:          #a8b3c9;   /* body copy */
-  --ja-muted:         #6c7890;
+  --ja-ink:           #232122;   /* headings + body */
+  --ja-body:          #4c4747;   /* long-form copy */
+  --ja-muted:         #8a8280;   /* secondary */
 
-  --ja-blue:          #4f7dff;   /* primary accent */
-  --ja-blue-br:       #7b9dff;
-  --ja-violet:        #8b5cf6;   /* gradient partner */
-  --ja-cyan:          #38d6f0;   /* console/citation accent */
-  --ja-grad:          linear-gradient(92deg, var(--ja-blue) 0%, var(--ja-violet) 100%);
-  --ja-on-accent:     #ffffff;
+  --ja-lilac:         #e7b5ea;   /* primary CTA pill */
+  --ja-lilac-deep:    #dd9fe2;   /* CTA hover */
+  --ja-raspberry:     #cc3366;   /* accent */
+  --ja-plum:          #63405e;
+  --ja-plum-deep:     #331925;   /* dark band */
+  --ja-coral:         #e96a4c;   /* mark tile / warm accent */
+  --ja-amber:         #f0a653;   /* mark tile / case amber */
 
-  --ja-green:         #3fd68f;
-  --ja-amber:         #f3c14b;
-  --ja-red:           #f0686e;
-
-  --ja-line:          rgba(255, 255, 255, 0.10);
-  --ja-line-2:        rgba(255, 255, 255, 0.18);
-  --ja-shadow:        0 40px 90px -50px rgba(0, 0, 0, 0.85);
+  --ja-line:          #eae4df;   /* hairline */
+  --ja-line-2:        #ddd4cd;
+  --ja-on-dark:       #fbf8f6;
+  --ja-shadow:        0 24px 60px -30px rgba(51, 25, 37, 0.28);
+  --ja-shadow-soft:   0 14px 44px -26px rgba(51, 25, 37, 0.22);
 
   --ja-mono:          var(--font-ja-mono), "JetBrains Mono", ui-monospace, monospace;
+
+  /* pastel wash — the hero "liquid" fabric, rebuilt as CSS gradients */
+  --ja-wash:
+    radial-gradient(46rem 30rem at 38% 42%, rgba(231, 181, 234, 0.95), transparent 68%),
+    radial-gradient(40rem 28rem at 62% 34%, rgba(244, 188, 211, 0.9), transparent 66%),
+    radial-gradient(36rem 26rem at 52% 66%, rgba(248, 211, 188, 0.85), transparent 64%),
+    radial-gradient(30rem 22rem at 30% 62%, rgba(214, 181, 240, 0.8), transparent 62%);
 
   background: var(--ja-bg);
   color: var(--ja-body);
@@ -55,11 +64,13 @@
 .ja-root.mp-root {
   font-family: var(--font-ja-body), Inter, system-ui, -apple-system, sans-serif;
   --mp-font-body: var(--font-ja-body), Inter, system-ui, sans-serif;
-  --mp-font-display: var(--font-ja-display), "Space Grotesk", system-ui, sans-serif;
-  --mp-font-hero: var(--font-ja-display), "Space Grotesk", system-ui, sans-serif;
+  --mp-font-display: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
+  --mp-font-hero: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
 }
 .ja-root.mp-root :where(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--font-ja-display), "Space Grotesk", system-ui, sans-serif;
+  font-family: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
+  /* Jeen sets display type at weight 400 — the size does the talking. */
+  font-weight: 400;
   color: var(--ja-ink);
 }
 
@@ -69,59 +80,51 @@
   inset-block-start: -48px;
   inset-inline-start: 12px;
   z-index: 200;
-  background: var(--ja-blue);
-  color: var(--ja-on-accent);
-  padding: 10px 16px;
-  border-radius: 10px;
-  font-weight: 700;
+  background: var(--ja-ink);
+  color: var(--ja-on-dark);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
   text-decoration: none;
 }
 .ja-skip:focus-visible { inset-block-start: 12px; }
 
-/* ── The layered-stack mark ────────────────────────────────── */
+/* ── The tile mark (riff on Jeen's rounded-rect lockup) ─────── */
 .ja-mark { display: block; inline-size: 1em; block-size: 1em; overflow: visible; }
-.ja-mark__layer {
-  fill: none;
-  stroke: var(--ja-ink);
-  stroke-width: 3;
-  stroke-linejoin: round;
-  transform-origin: 50% 50%;
-}
-.ja-mark__layer--top { stroke: var(--ja-blue-br); fill: rgba(79, 125, 255, 0.16); }
-.ja-mark__layer--mid { opacity: 0.85; }
-.ja-mark__layer--base { opacity: 0.55; }
-.ja-mark__solid { fill: var(--ja-blue); opacity: 0; transform-origin: 50% 50%; }
-
-.ja-mark--hero {
-  inline-size: min(46vmin, 460px);
-  block-size: min(46vmin, 460px);
-}
+.ja-mark__tile { transform-origin: 50% 50%; }
+.ja-mark__tile--lilac { fill: var(--ja-lilac); }
+.ja-mark__tile--coral { fill: var(--ja-coral); }
+.ja-mark__tile--amber { fill: var(--ja-amber); }
 @media (prefers-reduced-motion: no-preference) {
-  .ja-mark--hero .ja-mark__layer--top { animation: ja-float 7s ease-in-out infinite; }
-  .ja-mark--hero .ja-mark__layer--mid { animation: ja-float 7s ease-in-out -2.3s infinite; }
-  .ja-mark--hero .ja-mark__layer--base { animation: ja-float 7s ease-in-out -4.6s infinite; }
+  .ja-mark--float .ja-mark__tile--lilac { animation: ja-float 7s ease-in-out infinite; }
+  .ja-mark--float .ja-mark__tile--coral { animation: ja-float 7s ease-in-out -2.3s infinite; }
+  .ja-mark--float .ja-mark__tile--amber { animation: ja-float 7s ease-in-out -4.6s infinite; }
 }
 @keyframes ja-float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3.5px); }
+  50% { transform: translateY(-2.5px); }
 }
 
-/* ── Navigation ────────────────────────────────────────────── */
+/* ── Navigation — the floating white pill bar ──────────────── */
 .ja-nav {
   position: sticky;
-  inset-block-start: 0;
+  inset-block-start: 14px;
   z-index: 100;
-  background: rgba(7, 11, 22, 0.86);
-  backdrop-filter: blur(14px);
-  border-block-end: 1px solid var(--ja-line);
+  padding-inline: 16px;
+  pointer-events: none; /* the pill itself re-enables */
 }
 .ja-nav__inner {
+  pointer-events: auto;
   display: flex;
   align-items: center;
   gap: 14px;
-  max-inline-size: 1160px;
+  max-inline-size: 1060px;
   margin-inline: auto;
-  padding: 14px 22px;
+  padding: 10px 12px 10px 22px;
+  background: var(--ja-surface);
+  border: 1px solid rgba(234, 228, 223, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 18px 44px -28px rgba(51, 25, 37, 0.35);
 }
 .ja-brand {
   display: inline-flex;
@@ -129,43 +132,43 @@
   gap: 10px;
   text-decoration: none;
 }
-.ja-nav__mark { font-size: 26px; }
+.ja-nav__mark { font-size: 24px; }
 .ja-wordmark {
-  font-family: var(--font-ja-display), "Space Grotesk", system-ui, sans-serif;
-  font-weight: 700;
+  font-family: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
+  font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   color: var(--ja-ink);
 }
 .ja-nav__tag {
   font-family: var(--ja-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
-  color: var(--ja-blue-br);
-  border: 1px solid rgba(79, 125, 255, 0.45);
-  background: rgba(79, 125, 255, 0.10);
+  color: var(--ja-plum);
+  border: 1px solid var(--ja-line);
+  background: var(--ja-bg);
   border-radius: 999px;
   padding: 4px 10px;
   white-space: nowrap;
 }
 .ja-nav__links {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   margin-inline-start: auto;
 }
 .ja-root a.ja-nav__link,
 .ja-nav__link {
-  color: var(--ja-body);
+  color: var(--ja-ink);
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
   font-weight: 500;
-  padding: 8px 12px;
-  border-radius: 9px;
+  padding: 8px 14px;
+  border-radius: 999px;
   transition: color 0.18s ease, background-color 0.18s ease;
 }
 .ja-root a.ja-nav__link:hover,
-.ja-nav__link:hover { color: var(--ja-ink); background: rgba(255, 255, 255, 0.06); }
-.ja-nav__cta { display: flex; gap: 8px; }
+.ja-nav__link:hover { color: var(--ja-ink); background: var(--ja-tint); }
+.ja-nav__cta { display: flex; align-items: center; gap: 8px; }
 .ja-nav__short { display: none; }
 @media (max-width: 860px) {
   .ja-nav__links { display: none; }
@@ -174,7 +177,7 @@
   .ja-nav__tag { display: none; }
 }
 
-/* ── Buttons ───────────────────────────────────────────────── */
+/* ── Buttons — Jeen's 50px pills ───────────────────────────── */
 /* Doubled selectors (`.ja-root a.ja-btn…`) beat the global `.mp-root a`
    link color from marketing.css — the tenable/cytactic technique. */
 .ja-root a.ja-btn,
@@ -182,159 +185,163 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-radius: 12px;
-  padding: 13px 22px;
-  font-weight: 700;
-  font-size: 0.95rem;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.4;
   text-decoration: none;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease,
     border-color 0.18s ease, color 0.18s ease;
 }
-.ja-btn--sm { padding: 9px 15px; font-size: 0.85rem; border-radius: 10px; }
+.ja-btn--sm { padding: 9px 18px; font-size: 0.88rem; }
 .ja-root a.ja-btn--primary,
 .ja-btn--primary {
-  background: var(--ja-grad);
-  color: var(--ja-on-accent);
-  box-shadow: 0 14px 34px -16px rgba(79, 125, 255, 0.65);
+  background: var(--ja-lilac);
+  color: var(--ja-ink);
 }
 .ja-root a.ja-btn--primary:hover,
-.ja-btn--primary:hover { transform: translateY(-1px); box-shadow: 0 18px 40px -16px rgba(139, 92, 246, 0.7); color: var(--ja-on-accent); }
+.ja-btn--primary:hover {
+  background: var(--ja-lilac-deep);
+  transform: translateY(-1px);
+  color: var(--ja-ink);
+}
 .ja-root a.ja-btn--ghost,
 .ja-btn--ghost {
   color: var(--ja-ink);
-  border-color: var(--ja-line-2);
-  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--ja-line);
+  background: var(--ja-surface);
 }
 .ja-root a.ja-btn--ghost:hover,
-.ja-btn--ghost:hover { border-color: var(--ja-blue-br); color: var(--ja-blue-br); }
+.ja-btn--ghost:hover { border-color: var(--ja-line-2); transform: translateY(-1px); color: var(--ja-ink); }
+/* Nav CTA: Jeen's ink pill. */
+.ja-root a.ja-btn--ink,
+.ja-btn--ink {
+  background: var(--ja-ink);
+  color: var(--ja-on-dark);
+}
+.ja-root a.ja-btn--ink:hover,
+.ja-btn--ink:hover { background: #3a3637; color: var(--ja-on-dark); transform: translateY(-1px); }
+/* Close-band pills reuse the same language on cream. */
 .ja-root a.ja-btn--oninvert,
 .ja-btn--oninvert {
-  background: var(--ja-ink);
-  color: #101528;
+  background: var(--ja-lilac);
+  color: var(--ja-ink);
 }
 .ja-root a.ja-btn--oninvert:hover,
-.ja-btn--oninvert:hover { transform: translateY(-1px); color: #101528; }
+.ja-btn--oninvert:hover { background: var(--ja-lilac-deep); transform: translateY(-1px); color: var(--ja-ink); }
 .ja-root a.ja-btn--oninvert-ghost,
 .ja-btn--oninvert-ghost {
   color: var(--ja-ink);
-  border-color: rgba(255, 255, 255, 0.55);
+  background: var(--ja-surface);
+  border-color: var(--ja-line);
 }
 .ja-root a.ja-btn--oninvert-ghost:hover,
-.ja-btn--oninvert-ghost:hover { background: rgba(255, 255, 255, 0.12); color: var(--ja-ink); }
+.ja-btn--oninvert-ghost:hover { border-color: var(--ja-line-2); transform: translateY(-1px); color: var(--ja-ink); }
 .ja-btn__arrow { transition: transform 0.18s ease; }
 .ja-btn--primary:hover .ja-btn__arrow { transform: translateX(3px); }
 
-/* ── Hero ──────────────────────────────────────────────────── */
+/* ── Hero — centered over the liquid wash ──────────────────── */
 .ja-hero {
   position: relative;
-  min-block-size: calc(100svh - 60px);
+  min-block-size: calc(96svh - 70px);
   display: grid;
   align-items: center;
   overflow: hidden;
-  background:
-    radial-gradient(900px 540px at 84% 8%, rgba(79, 125, 255, 0.16), transparent 60%),
-    radial-gradient(720px 480px at 6% 96%, rgba(139, 92, 246, 0.14), transparent 60%),
-    var(--ja-bg);
+  background: var(--ja-bg);
 }
-.ja-hero__visual {
+/* The roaming pastel window. Default (no JS / reduced motion): a static,
+   centered soft ellipse. JS animates the mask center (jeen.ai's mechanism). */
+.ja-liquid {
   position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: 4%;
-  transform: translateY(-50%);
-  opacity: 0.9;
+  inset: 0;
   pointer-events: none;
 }
-@media (max-width: 980px) {
-  .ja-hero__visual { opacity: 0.16; inset-inline-end: -12%; }
+.ja-liquid__blob {
+  position: absolute;
+  inset: 0;
+  background: var(--ja-wash);
+  -webkit-mask-image: radial-gradient(38rem 24rem at 50% 46%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(38rem 24rem at 50% 46%, #000 0%, transparent 100%);
 }
 .ja-hero__inner {
+  position: relative;
+  z-index: 1;
   max-inline-size: 1160px;
   margin-inline: auto;
-  padding: 72px 22px 96px;
+  padding: 96px 22px 110px;
   inline-size: 100%;
 }
-.ja-hero__copy { max-inline-size: 640px; position: relative; z-index: 1; }
+.ja-hero__copy {
+  max-inline-size: 880px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .ja-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   font-family: var(--ja-mono);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.14em;
-  color: var(--ja-blue-br);
-  margin-block-end: 18px;
+  color: var(--ja-plum);
+  margin-block-end: 22px;
 }
 .ja-eyebrow__dot {
   inline-size: 8px;
   block-size: 8px;
-  border-radius: 50%;
-  background: var(--ja-grad);
-  box-shadow: 0 0 12px rgba(79, 125, 255, 0.9);
+  border-radius: 3px;
+  background: var(--ja-coral);
 }
 .ja-title {
-  font-size: clamp(2.2rem, 5.2vw, 3.65rem);
-  line-height: 1.06;
-  letter-spacing: -0.025em;
-  font-weight: 700;
-  margin: 0 0 20px;
+  /* Jeen: 72px / 1.1, weight 400, near-normal tracking. */
+  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  margin: 0 0 22px;
 }
-.ja-hl {
-  background: var(--ja-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+.ja-hl { color: var(--ja-ink); }
 .ja-lede {
-  font-size: clamp(1.02rem, 1.6vw, 1.16rem);
-  line-height: 1.65;
-  max-inline-size: 56ch;
-  margin: 0 0 30px;
+  font-size: clamp(1.02rem, 1.6vw, 1.18rem);
+  line-height: 1.6;
+  max-inline-size: 62ch;
+  margin: 0 auto 32px;
+  color: var(--ja-ink);
 }
-.ja-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-block-end: 26px; }
+.ja-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-block-end: 26px;
+}
 .ja-hero__trust {
   font-size: 0.88rem;
   color: var(--ja-muted);
   margin: 0;
 }
-.ja-hero__trust strong { color: var(--ja-soft); font-weight: 600; }
-.ja-hero__scroll {
-  position: absolute;
-  inset-block-end: 18px;
-  inset-inline-start: 50%;
-  transform: translateX(-50%);
-  font-family: var(--ja-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.3em;
-  color: var(--ja-muted);
-  text-transform: uppercase;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .ja-hero__scroll { animation: ja-bob 2.4s ease-in-out infinite; }
-}
-@keyframes ja-bob {
-  0%, 100% { transform: translate(-50%, 0); opacity: 0.7; }
-  50% { transform: translate(-50%, 6px); opacity: 1; }
-}
+.ja-hero__trust strong { color: var(--ja-ink); font-weight: 600; }
 
-/* ── Trust strip ───────────────────────────────────────────── */
-.ja-trust {
-  border-block: 1px solid var(--ja-line);
-  background: var(--ja-bg-1);
-}
+/* ── Trust strip — quiet, logo-strip register ──────────────── */
+.ja-trust { border-block: 1px solid var(--ja-line); background: var(--ja-bg); }
 .ja-trust__inner {
   max-inline-size: 1160px;
   margin-inline: auto;
-  padding: 16px 22px;
+  padding: 18px 22px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 14px 18px;
-  font-size: 0.86rem;
+  gap: 14px 22px;
+  font-size: 0.88rem;
   color: var(--ja-muted);
 }
-.ja-trust__item b { color: var(--ja-soft); font-weight: 600; }
+.ja-trust__item b { color: var(--ja-ink); font-weight: 600; }
 .ja-trust__sep {
   inline-size: 4px;
   block-size: 4px;
@@ -344,31 +351,37 @@
 @media (max-width: 640px) { .ja-trust__sep { display: none; } }
 
 /* ── Sections ──────────────────────────────────────────────── */
-.ja-section { padding-block: 92px; }
-.ja-section--soft { background: var(--ja-bg-1); border-block: 1px solid var(--ja-line); }
+.ja-section { padding-block: 100px; }
+.ja-section--soft { background: var(--ja-surface); border-block: 1px solid var(--ja-line); }
 .ja-wrap { max-inline-size: 1160px; margin-inline: auto; padding-inline: 22px; }
-.ja-section__head { max-inline-size: 720px; margin-block-end: 44px; }
+.ja-section__head {
+  max-inline-size: 760px;
+  margin-inline: auto;
+  margin-block-end: 52px;
+  text-align: center;
+}
 .ja-kicker {
   font-family: var(--ja-mono);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ja-blue-br);
-  margin: 0 0 12px;
-}
-.ja-h2 {
-  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-  line-height: 1.14;
-  letter-spacing: -0.02em;
+  color: var(--ja-raspberry);
   margin: 0 0 14px;
 }
-.ja-sub { font-size: 1.02rem; line-height: 1.65; margin: 0; }
+.ja-h2 {
+  /* Jeen's section statements: big, weight 400. */
+  font-size: clamp(1.9rem, 3.8vw, 2.9rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+}
+.ja-sub { font-size: 1.04rem; line-height: 1.65; margin: 0; }
 
-/* ── The governed-answer console ───────────────────────────── */
+/* ── The governed-answer console — the big rounded panel ───── */
 .ja-console {
-  border: 1px solid var(--ja-line-2);
-  border-radius: 18px;
-  background: var(--ja-bg-2);
+  border: 1px solid var(--ja-line);
+  border-radius: 28px;
+  background: var(--ja-bg);
   box-shadow: var(--ja-shadow);
   overflow: hidden;
 }
@@ -376,29 +389,30 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-block-end: 1px solid var(--ja-line);
-  background: var(--ja-bg-3);
+  background:
+    linear-gradient(90deg, rgba(231, 181, 234, 0.35), rgba(248, 211, 188, 0.3)),
+    var(--ja-surface);
 }
 .ja-console__dot {
   inline-size: 10px;
   block-size: 10px;
   border-radius: 50%;
-  background: var(--ja-line-2);
 }
-.ja-console__dot:nth-child(1) { background: var(--ja-red); }
+.ja-console__dot:nth-child(1) { background: var(--ja-coral); }
 .ja-console__dot:nth-child(2) { background: var(--ja-amber); }
-.ja-console__dot:nth-child(3) { background: var(--ja-green); }
+.ja-console__dot:nth-child(3) { background: var(--ja-lilac); }
 .ja-console__name {
   font-family: var(--ja-mono);
   font-size: 0.74rem;
-  color: var(--ja-muted);
+  color: var(--ja-plum);
   margin-inline-start: 8px;
 }
 .ja-console__clock {
   font-family: var(--ja-mono);
   font-size: 0.74rem;
-  color: var(--ja-blue-br);
+  color: var(--ja-plum);
   margin-inline-start: auto;
   font-variant-numeric: tabular-nums;
 }
@@ -409,6 +423,7 @@
   gap: 12px;
   padding: 14px 18px;
   border-block-end: 1px solid var(--ja-line);
+  background: var(--ja-surface);
 }
 .ja-status {
   display: inline-flex;
@@ -417,16 +432,16 @@
   font-family: var(--ja-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  color: var(--ja-cyan);
-  border: 1px solid rgba(56, 214, 240, 0.4);
-  background: rgba(56, 214, 240, 0.08);
+  color: var(--ja-plum);
+  border: 1px solid var(--ja-line);
+  background: var(--ja-bg);
   border-radius: 999px;
   padding: 5px 12px;
 }
 .ja-status[data-phase='answered'] {
-  color: var(--ja-green);
-  border-color: rgba(63, 214, 143, 0.45);
-  background: rgba(63, 214, 143, 0.08);
+  color: var(--ja-raspberry);
+  border-color: rgba(204, 51, 102, 0.35);
+  background: rgba(204, 51, 102, 0.07);
 }
 .ja-status__pip {
   inline-size: 7px;
@@ -447,6 +462,7 @@
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   gap: 0;
+  background: var(--ja-surface);
 }
 @media (max-width: 860px) { .ja-console__body { grid-template-columns: 1fr; } }
 .ja-stream { padding: 18px; border-inline-end: 1px solid var(--ja-line); }
@@ -468,21 +484,22 @@
   font-family: var(--ja-mono);
   font-size: 0.8rem;
   padding: 9px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid var(--ja-line);
-  background: var(--ja-bg-1);
+  background: var(--ja-bg);
   color: var(--ja-muted);
-  opacity: 0.35;
+  opacity: 0.45;
   transform: translateX(-4px);
   transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease, color 0.4s ease;
 }
 .ja-source[data-on='true'] { opacity: 1; transform: translateX(0); color: var(--ja-body); }
 .ja-source[data-cited='true'] {
-  border-color: rgba(63, 214, 143, 0.45);
-  color: var(--ja-soft);
+  border-color: rgba(204, 51, 102, 0.4);
+  color: var(--ja-ink);
+  background: var(--ja-surface);
 }
-.ja-source__icon { color: var(--ja-cyan); inline-size: 1em; text-align: center; }
-.ja-source[data-cited='true'] .ja-source__icon { color: var(--ja-green); }
+.ja-source__icon { color: var(--ja-plum); inline-size: 1em; text-align: center; }
+.ja-source[data-cited='true'] .ja-source__icon { color: var(--ja-raspberry); }
 .ja-source__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ja-source__kind {
   margin-inline-start: auto;
@@ -491,6 +508,7 @@
   border: 1px solid var(--ja-line);
   border-radius: 6px;
   padding: 2px 7px;
+  background: var(--ja-surface);
 }
 
 .ja-pipe { padding: 18px; }
@@ -502,7 +520,7 @@
   font-size: 0.88rem;
   color: var(--ja-muted);
   padding: 8px 10px;
-  border-radius: 9px;
+  border-radius: 10px;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 .ja-pipe__node {
@@ -515,22 +533,21 @@
 }
 .ja-pipe__step[data-state='active'] {
   color: var(--ja-ink);
-  background: rgba(79, 125, 255, 0.08);
+  background: rgba(231, 181, 234, 0.22);
 }
 .ja-pipe__step[data-state='active'] .ja-pipe__node {
-  border-color: var(--ja-blue-br);
-  background: var(--ja-blue);
-  box-shadow: 0 0 10px rgba(79, 125, 255, 0.8);
+  border-color: var(--ja-plum);
+  background: var(--ja-lilac);
 }
-.ja-pipe__step[data-state='done'] { color: var(--ja-soft); }
+.ja-pipe__step[data-state='done'] { color: var(--ja-ink); }
 .ja-pipe__step[data-state='done'] .ja-pipe__node {
-  border-color: var(--ja-green);
-  background: var(--ja-green);
+  border-color: var(--ja-raspberry);
+  background: var(--ja-raspberry);
 }
 .ja-gauge {
   border: 1px solid var(--ja-line);
-  border-radius: 12px;
-  background: var(--ja-bg-1);
+  border-radius: 16px;
+  background: var(--ja-bg);
   padding: 14px 16px;
 }
 .ja-gauge__head {
@@ -557,14 +574,14 @@
 .ja-gauge__track {
   block-size: 8px;
   border-radius: 999px;
-  background: var(--ja-bg-3);
+  background: var(--ja-tint);
   overflow: hidden;
 }
 .ja-gauge__fill {
   display: block;
   block-size: 100%;
   border-radius: inherit;
-  background: var(--ja-grad);
+  background: linear-gradient(90deg, var(--ja-lilac), var(--ja-raspberry));
   transition: inline-size 0.5s ease;
 }
 .ja-gauge__meta {
@@ -575,7 +592,7 @@
 }
 
 /* ── Proof cards ───────────────────────────────────────────── */
-.ja-proof__group { margin-block-end: 34px; }
+.ja-proof__group { margin-block-end: 38px; }
 .ja-proof__group:last-of-type { margin-block-end: 0; }
 .ja-proof__glabel {
   display: flex;
@@ -605,21 +622,22 @@
   display: flex;
   flex-direction: column;
   border: 1px solid var(--ja-line);
-  border-radius: 16px;
-  background: var(--ja-bg-2);
+  border-radius: 24px;
+  background: var(--ja-surface);
   overflow: hidden;
   text-decoration: none;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .ja-pcard:hover {
   transform: translateY(-3px);
-  border-color: rgba(79, 125, 255, 0.5);
-  box-shadow: var(--ja-shadow);
+  border-color: var(--ja-line-2);
+  box-shadow: var(--ja-shadow-soft);
 }
 .ja-pcard__screen {
   background:
-    radial-gradient(340px 160px at 70% 0%, rgba(79, 125, 255, 0.14), transparent 70%),
-    var(--ja-bg-3);
+    radial-gradient(320px 150px at 68% 0%, rgba(231, 181, 234, 0.35), transparent 70%),
+    radial-gradient(280px 140px at 20% 100%, rgba(248, 211, 188, 0.3), transparent 70%),
+    var(--ja-bg);
   border-block-end: 1px solid var(--ja-line);
   padding: 18px;
   display: grid;
@@ -630,18 +648,18 @@
   font-family: var(--ja-mono);
   font-size: 0.64rem;
   letter-spacing: 0.14em;
-  color: var(--ja-blue-br);
+  color: var(--ja-raspberry);
 }
-.ja-pcard__title { font-size: 1.14rem; margin: 0; }
+.ja-pcard__title { font-size: 1.16rem; font-weight: 500; margin: 0; }
 .ja-pcard__desc { font-size: 0.9rem; line-height: 1.6; margin: 0; color: var(--ja-body); }
 .ja-pcard__link {
   margin-block-start: auto;
   padding-block-start: 8px;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.88rem;
   color: var(--ja-ink);
 }
-.ja-pcard:hover .ja-pcard__link { color: var(--ja-blue-br); }
+.ja-pcard:hover .ja-pcard__link { color: var(--ja-raspberry); }
 /* Credential card (Joomsy): not a link, no hover lift, an honest muted note. */
 .ja-pcard--static:hover { transform: none; border-color: var(--ja-line); box-shadow: none; }
 .ja-pcard__link--muted {
@@ -651,21 +669,21 @@
   font-family: var(--ja-mono);
 }
 .ja-pcard--static:hover .ja-pcard__link--muted { color: var(--ja-muted); }
-.ja-proof__more { margin: 26px 0 0; font-size: 0.94rem; color: var(--ja-muted); }
-.ja-proof__more a { color: var(--ja-blue-br); font-weight: 600; }
+.ja-proof__more { margin: 28px 0 0; font-size: 0.94rem; color: var(--ja-muted); text-align: center; }
+.ja-proof__more a { color: var(--ja-raspberry); font-weight: 600; }
 
-/* Proof visuals (inline SVG) */
+/* Proof visuals (inline SVG) — repainted to the live palette */
 .ja-vis { inline-size: 100%; max-inline-size: 220px; block-size: auto; }
-.ja-vis__panel { fill: var(--ja-bg-1); stroke: var(--ja-line-2); }
+.ja-vis__panel { fill: var(--ja-surface); stroke: var(--ja-line-2); }
 .ja-vis__line { fill: var(--ja-line-2); }
 .ja-vis__line--soft { fill: var(--ja-line); }
 .ja-vis__wire { stroke: var(--ja-line-2); stroke-width: 2; }
 .ja-vis__flow {
-  stroke: var(--ja-blue);
+  stroke: var(--ja-raspberry);
   stroke-width: 2;
   stroke-dasharray: 6 8;
 }
-.ja-vis__pulse { fill: var(--ja-cyan); cx: 94px; cy: 60px; }
+.ja-vis__pulse { fill: var(--ja-coral); cx: 94px; cy: 60px; }
 @media (prefers-reduced-motion: no-preference) {
   .ja-vis__flow { animation: ja-dash 1.4s linear infinite; }
   .ja-vis__pulse { animation: ja-travel 2.2s ease-in-out infinite; }
@@ -677,21 +695,21 @@
   50% { transform: translateX(34px); opacity: 1; }
   65% { opacity: 0; }
 }
-.ja-vis__art { fill: rgba(79, 125, 255, 0.10); stroke: rgba(79, 125, 255, 0.5); }
-.ja-vis__art-bar { fill: var(--ja-blue); opacity: 0.85; }
-.ja-vis__chip { fill: var(--ja-line-2); }
-.ja-vis__chip--b { fill: rgba(139, 92, 246, 0.6); }
+.ja-vis__art { fill: rgba(231, 181, 234, 0.28); stroke: var(--ja-plum); }
+.ja-vis__art-bar { fill: var(--ja-plum); opacity: 0.9; }
+.ja-vis__chip { fill: var(--ja-line); }
+.ja-vis__chip--b { fill: rgba(231, 181, 234, 0.8); }
 .ja-vis__edge { stroke: var(--ja-line-2); stroke-width: 2; }
-.ja-vis__edge--out { stroke: var(--ja-blue); }
-.ja-vis__worker rect { fill: var(--ja-bg-1); stroke: var(--ja-line-2); }
+.ja-vis__edge--out { stroke: var(--ja-raspberry); }
+.ja-vis__worker rect { fill: var(--ja-bg); stroke: var(--ja-line-2); }
 .ja-vis__worker text {
-  fill: var(--ja-body);
+  fill: var(--ja-plum);
   font-family: var(--ja-mono);
   font-size: 10px;
   text-anchor: middle;
 }
-.ja-vis__hub { fill: rgba(79, 125, 255, 0.18); stroke: var(--ja-blue); stroke-width: 2; }
-.ja-vis__hub-ring { fill: none; stroke: rgba(79, 125, 255, 0.4); stroke-width: 1; }
+.ja-vis__hub { fill: rgba(231, 181, 234, 0.4); stroke: var(--ja-plum); stroke-width: 2; }
+.ja-vis__hub-ring { fill: none; stroke: rgba(99, 64, 94, 0.4); stroke-width: 1; }
 @media (prefers-reduced-motion: no-preference) {
   .ja-vis__hub-ring { animation: ja-ring 2.6s ease-out infinite; transform-origin: 110px 60px; }
 }
@@ -699,11 +717,11 @@
   0% { transform: scale(1); opacity: 0.8; }
   100% { transform: scale(1.8); opacity: 0; }
 }
-.ja-vis__sink { fill: rgba(63, 214, 143, 0.18); stroke: var(--ja-green); }
-.ja-vis__disc { fill: rgba(139, 92, 246, 0.35); stroke: var(--ja-violet); }
+.ja-vis__sink { fill: rgba(240, 166, 83, 0.3); stroke: var(--ja-amber); }
+.ja-vis__disc { fill: rgba(233, 106, 76, 0.3); stroke: var(--ja-coral); }
 .ja-vis__row { fill: var(--ja-line); }
-.ja-vis__row--play { fill: rgba(79, 125, 255, 0.55); }
-.ja-vis__eq rect { fill: var(--ja-cyan); }
+.ja-vis__row--play { fill: rgba(231, 181, 234, 0.85); }
+.ja-vis__eq rect { fill: var(--ja-coral); }
 @media (prefers-reduced-motion: no-preference) {
   .ja-vis__eq rect { animation: ja-eq 1s ease-in-out infinite alternate; transform-origin: center bottom; }
   .ja-vis__eq rect:nth-child(2) { animation-delay: -0.3s; }
@@ -712,7 +730,13 @@
 }
 @keyframes ja-eq { from { transform: scaleY(0.55); } to { transform: scaleY(1); } }
 
-/* ── Fit cards ─────────────────────────────────────────────── */
+/* ── Fit cards — the deep-plum band (their dark sections) ──── */
+.ja-section--plum {
+  background: var(--ja-plum-deep);
+}
+.ja-section--plum .ja-kicker { color: var(--ja-lilac); }
+.ja-section--plum .ja-h2 { color: var(--ja-on-dark); }
+.ja-section--plum .ja-sub { color: rgba(251, 248, 246, 0.75); }
 .ja-fit__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -721,64 +745,67 @@
 @media (max-width: 860px) { .ja-fit__grid { grid-template-columns: 1fr; } }
 .ja-fcard {
   position: relative;
-  border: 1px solid var(--ja-line);
-  border-radius: 16px;
-  background: var(--ja-bg-2);
-  padding: 24px 24px 22px;
+  border: 1px solid rgba(251, 248, 246, 0.14);
+  border-radius: 24px;
+  background: rgba(251, 248, 246, 0.05);
+  padding: 26px 26px 24px;
   overflow: hidden;
-}
-.ja-fcard::before {
-  content: '';
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline: 0;
-  block-size: 2px;
-  background: var(--ja-grad);
-  opacity: 0.6;
 }
 .ja-fcard__no {
   position: absolute;
-  inset-block-start: 16px;
-  inset-inline-end: 20px;
+  inset-block-start: 18px;
+  inset-inline-end: 22px;
   font-family: var(--ja-mono);
   font-size: 0.8rem;
-  color: var(--ja-muted);
+  color: rgba(251, 248, 246, 0.45);
 }
-.ja-fcard__k { font-size: 1.12rem; margin: 0 0 8px; }
-.ja-fcard__lead { font-weight: 600; color: var(--ja-blue-br); font-size: 0.92rem; margin: 0 0 10px; }
-.ja-fcard__body { font-size: 0.92rem; line-height: 1.65; margin: 0; }
+.ja-fcard__k { font-size: 1.16rem; font-weight: 500; margin: 0 0 8px; color: var(--ja-on-dark); }
+.ja-fcard__lead { font-weight: 600; color: var(--ja-lilac); font-size: 0.92rem; margin: 0 0 10px; }
+.ja-fcard__body { font-size: 0.92rem; line-height: 1.65; margin: 0; color: rgba(251, 248, 246, 0.75); }
 
-/* ── CTA band ──────────────────────────────────────────────── */
+/* ── Close band — their "Ready to scale" register, on cream ── */
 .ja-cta {
-  background: var(--ja-grad);
-  padding-block: 84px;
+  position: relative;
+  overflow: hidden;
+  background: var(--ja-bg);
+  padding-block: 110px;
+}
+.ja-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ja-wash);
+  -webkit-mask-image: radial-gradient(36rem 22rem at 50% 55%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(36rem 22rem at 50% 55%, #000 0%, transparent 100%);
+  pointer-events: none;
 }
 .ja-cta__inner {
+  position: relative;
   max-inline-size: 860px;
   margin-inline: auto;
   padding-inline: 22px;
   text-align: center;
 }
-.ja-cta__mark { font-size: 44px; margin-inline: auto; margin-block-end: 18px; }
-.ja-cta__mark .ja-mark__layer { stroke: var(--ja-ink); }
-.ja-cta__mark .ja-mark__layer--top { fill: rgba(255, 255, 255, 0.2); stroke: var(--ja-ink); }
+.ja-cta__mark { font-size: 40px; margin-inline: auto; margin-block-end: 20px; }
 .ja-cta__title {
   color: var(--ja-ink);
-  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
-  letter-spacing: -0.02em;
-  margin: 0 0 12px;
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0 0 14px;
 }
 .ja-cta__sub {
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 1.04rem;
+  color: var(--ja-body);
+  font-size: 1.06rem;
   line-height: 1.6;
   max-inline-size: 52ch;
-  margin: 0 auto 28px;
+  margin: 0 auto 30px;
 }
 .ja-cta__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
-/* ── Footer ────────────────────────────────────────────────── */
-.ja-footer { background: var(--ja-bg-1); border-block-start: 1px solid var(--ja-line); }
+/* ── Footer — cream, columned, hairline ────────────────────── */
+.ja-footer { background: var(--ja-bg); border-block-start: 1px solid var(--ja-line); }
 .ja-footer__inner {
   max-inline-size: 1160px;
   margin-inline: auto;
@@ -812,13 +839,13 @@
 .ja-footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .ja-root a.ja-footer__link,
 .ja-footer__link {
-  color: var(--ja-body);
+  color: var(--ja-ink);
   text-decoration: none;
   font-size: 0.92rem;
   transition: color 0.18s ease;
 }
 .ja-root a.ja-footer__link:hover,
-.ja-footer__link:hover { color: var(--ja-blue-br); }
+.ja-footer__link:hover { color: var(--ja-raspberry); }
 .ja-footer__bottom { border-block-start: 1px solid var(--ja-line); }
 .ja-footer__bottom-inner {
   max-inline-size: 1160px;
@@ -834,7 +861,10 @@
 
 /* ── Focus visibility (inherits mp-root base, tuned to brand) ── */
 .ja-root :where(a, button):focus-visible {
-  outline: 2px solid var(--ja-blue-br);
+  outline: 2px solid var(--ja-plum);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 8px;
+}
+.ja-section--plum :where(a, button):focus-visible {
+  outline-color: var(--ja-lilac);
 }

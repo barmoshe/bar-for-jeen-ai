@@ -1,49 +1,31 @@
 'use client';
 
 /**
- * JeenMark — a layered-stack motif built from scratch for this page, riffing on
- * Jeen's "enterprise AI operating layer" positioning: three floating layers
- * (apps on top, the operating layer in the middle, models and data at the base)
- * that read as one system. Deliberately NOT Jeen's logo: the environment this
- * page was built in could not load jeen.ai's live assets, so the mark
- * interprets the brand's language instead of copying its lockup.
+ * JeenMark — a rounded-rectangle tile trio, riffing on the visual language of
+ * Jeen's actual lockup (small rounded-rect tiles beside the wordmark) and the
+ * lilac/coral/amber glass tiles of their "governed foundation" hero film,
+ * both read live off jeen.ai. Deliberately NOT Jeen's logo: same language,
+ * different composition.
  *
- * - `.ja-mark__layers` floats gently (pure CSS, per-layer phase offsets).
- * - `.ja-mark__solid` is the converged block the hero scroll-timeline
- *   cross-fades in (driven by GSAP in JeenApp): scattered layers collapse into
- *   one operating layer. Degrades to the static stack with no JS.
- *
- * Reduced motion: the float is disabled in jeen-ai.css and the hero never
- * builds its ScrollTrigger, so the mark renders as a calm static stack.
- *
- * `variant="hero"` is the large animated lockup; the default is the small
- * static brandmark used in the nav, footer, and CTA.
+ * Pure SVG, colored via jeen-ai.css tokens. `float` adds a gentle per-tile
+ * bob (CSS only, disabled under prefers-reduced-motion).
  */
 
-// Three isometric diamond layers about (50,50), top vertex up. Coords are
-// static 2dp literals so SSR and client markup match exactly.
-const LAYER_TOP = '50,14 82,30 50,46 18,30';
-const LAYER_MID = '50,32 82,48 50,64 18,48';
-const LAYER_BASE = '50,50 82,66 50,82 18,66';
-
 export default function JeenMark({
-  variant = 'brand',
+  float = false,
   className,
 }: {
-  variant?: 'brand' | 'hero';
+  float?: boolean;
   className?: string;
 }) {
-  const cls = ['ja-mark', `ja-mark--${variant}`, className]
+  const cls = ['ja-mark', float ? 'ja-mark--float' : null, className]
     .filter(Boolean)
     .join(' ');
   return (
     <svg className={cls} viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-      <g className="ja-mark__layers">
-        <polygon className="ja-mark__layer ja-mark__layer--base" points={LAYER_BASE} />
-        <polygon className="ja-mark__layer ja-mark__layer--mid" points={LAYER_MID} />
-        <polygon className="ja-mark__layer ja-mark__layer--top" points={LAYER_TOP} />
-      </g>
-      <polygon className="ja-mark__solid" points={LAYER_MID} />
+      <rect className="ja-mark__tile ja-mark__tile--lilac" x="10" y="34" width="34" height="56" rx="10" />
+      <rect className="ja-mark__tile ja-mark__tile--amber" x="10" y="10" width="34" height="18" rx="8" />
+      <rect className="ja-mark__tile ja-mark__tile--coral" x="52" y="10" width="38" height="52" rx="11" />
     </svg>
   );
 }
