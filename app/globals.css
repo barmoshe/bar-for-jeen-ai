@@ -1,0 +1,18 @@
+/* Minimal document base. The page surface is painted by `.tn-root` in
+   src/marketing/tenable/tenable.css; here we only zero the document margins
+   and set the dark charcoal behind the app so there is no white flash before
+   the React tree mounts. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #15181d; /* --tn-bg */
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100svh;
+}

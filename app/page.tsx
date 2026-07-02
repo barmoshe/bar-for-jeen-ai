@@ -1,0 +1,68 @@
+import type { Metadata } from "next";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import JeenApp from "@/src/marketing/jeen-ai/JeenApp";
+
+// Type trio for the Jeen.AI application page: Space Grotesk for display (a
+// modern grotesque that reads like enterprise-AI product sites), Inter for
+// body, JetBrains Mono for the console / pipeline labels. Exposed as
+// --font-ja-* for jeen-ai.css.
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ja-display",
+  display: "swap",
+});
+const body = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ja-body",
+  display: "swap",
+});
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-ja-mono",
+  display: "swap",
+});
+
+// Ad-hoc, personalized application page for Bar Moshe's "Full Stack Engineer"
+// application to Jeen.AI (R&D, Tel Aviv). Speaks Jeen's own language (the
+// enterprise AI operating layer: agents, workflows, governed knowledge, any
+// cloud or air-gapped on-prem) and makes the case for Bar inside it. Built
+// embedded in the workshop site as a sanctioned exception (ADR 0141), then
+// extracted to this standalone sibling per the ADR-0132 recipe. Noindex, a
+// private shareable link for the Jeen team.
+const ogTitle = "Bar Moshe × Jeen AI — Full Stack Engineer";
+const ogDescription =
+  "Bar Moshe, full stack engineer in Tel Aviv. React, Next.js, TypeScript, Node; Docker and Kubernetes; open-source AI tooling on npm; featured on Temporal's Code Exchange.";
+
+// noindex (private, shareable link) but a rich share card still renders for
+// direct shares (email / DM / LinkedIn); og:image comes from the colocated
+// opengraph-image.tsx.
+export const metadata: Metadata = {
+  title: ogTitle,
+  description: ogDescription,
+  robots: { index: false, follow: false },
+  openGraph: {
+    type: "website",
+    siteName: "Bar Moshe",
+    title: ogTitle,
+    description: ogDescription,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@barmoshe1",
+    creator: "@barmoshe1",
+    title: ogTitle,
+    description: ogDescription,
+  },
+};
+
+export default function JeenPage() {
+  return (
+    <div className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <JeenApp />
+    </div>
+  );
+}
