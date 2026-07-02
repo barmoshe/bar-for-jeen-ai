@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Hanken_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import JeenApp from "@/src/marketing/jeen-ai/JeenApp";
 
-// Type trio for the Jeen.AI application page: Space Grotesk for display (a
-// modern grotesque that reads like enterprise-AI product sites), Inter for
-// body, JetBrains Mono for the console / pipeline labels. Exposed as
-// --font-ja-* for jeen-ai.css.
-const display = Space_Grotesk({
+// Type trio for the Jeen.AI application page, matched to the live site:
+// jeen.ai sets display in BrittiSans (400) and body in AktivGrotesk — both
+// commercial. Hanken Grotesk is the free near-match for the display cut,
+// Inter for the body, JetBrains Mono for the console / pipeline labels.
+// Exposed as --font-ja-* for jeen-ai.css.
+const display = Hanken_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-ja-display",
