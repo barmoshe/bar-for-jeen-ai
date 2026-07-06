@@ -29,7 +29,7 @@ import './jeen-ai.css';
 
 const EMAIL =
   'mailto:1barmoshe1@gmail.com?subject=Full%20Stack%20Engineer%20application%20from%20Bar%20Moshe';
-const CV = '/Bar_Moshe_Resume.pdf';
+const CV = '/Bar_Moshe_CV_JeenAI.pdf';
 
 type Proof = {
   tag: string;
