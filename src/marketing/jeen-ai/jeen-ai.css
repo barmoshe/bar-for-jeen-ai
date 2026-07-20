@@ -903,6 +903,41 @@
 .ja-fcard__lead { font-weight: 600; color: var(--ja-lilac); font-size: 0.92rem; margin: 0 0 10px; }
 .ja-fcard__body { font-size: 0.92rem; line-height: 1.65; margin: 0; color: rgba(251, 248, 246, 0.75); }
 
+/* ── Featured — jeen's testimonial slot, filled with real validation ── */
+.ja-featured { background: var(--ja-bg); padding-block: 40px 8px; }
+.ja-featured__card {
+  max-inline-size: 780px;
+  margin-inline: auto;
+  padding: 40px 40px 34px;
+  text-align: center;
+  background: var(--ja-surface);
+  border: 1px solid var(--ja-line);
+  border-radius: 26px;
+  box-shadow: var(--ja-shadow-soft);
+}
+.ja-featured__eyebrow {
+  font-family: var(--ja-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--ja-plum);
+  margin: 0 0 16px;
+}
+.ja-featured__quote {
+  margin: 0 0 18px;
+  font-family: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
+  font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+  line-height: 1.4;
+  color: var(--ja-ink);
+}
+.ja-root a.ja-featured__cite,
+.ja-featured__cite {
+  font-family: var(--ja-mono);
+  font-size: 0.82rem;
+  color: var(--ja-raspberry);
+  text-decoration: none;
+}
+.ja-root a.ja-featured__cite:hover { text-decoration: underline; }
+
 /* ── Close band — their "Ready to scale" register, on cream ── */
 .ja-cta {
   position: relative;
@@ -914,9 +949,12 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--ja-wash);
-  -webkit-mask-image: radial-gradient(36rem 22rem at 50% 55%, #000 0%, transparent 100%);
-  mask-image: radial-gradient(36rem 22rem at 50% 55%, #000 0%, transparent 100%);
+  /* reuse the hero's swirl texture for a consistent close */
+  background:
+    url("/swirl.svg") center / cover no-repeat,
+    var(--ja-wash);
+  -webkit-mask-image: radial-gradient(20rem 22rem at 50% 55%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(20rem 22rem at 50% 55%, #000 0%, transparent 100%);
   pointer-events: none;
 }
 .ja-cta__inner {

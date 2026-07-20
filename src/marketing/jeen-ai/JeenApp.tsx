@@ -891,6 +891,28 @@ export default function JeenApp() {
           </div>
         </section>
 
+        {/* ── Featured (honest external validation, not a testimonial) ── */}
+        <section className="ja-featured">
+          <div className="ja-wrap" data-reveal>
+            <figure className="ja-featured__card">
+              <p className="ja-featured__eyebrow">Recognized</p>
+              <blockquote className="ja-featured__quote">
+                A cross-language orchestration service I built is featured on
+                Temporal&rsquo;s official Code Exchange, alongside an MCP server and
+                editor plugins published open-source on npm.
+              </blockquote>
+              <a
+                className="ja-featured__cite"
+                href="https://temporal.io/code-exchange/cross-language-data-processing-service-with-temporal"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                temporal.io/code-exchange →
+              </a>
+            </figure>
+          </div>
+        </section>
+
         {/* ── Close band (cream, wash-washed, centered) ─────── */}
         <section className="ja-cta">
           <div className="ja-cta__inner" data-reveal>
