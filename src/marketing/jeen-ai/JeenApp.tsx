@@ -428,6 +428,32 @@ const MARQUEE = [
   'Prompt engineering', 'CI/CD',
 ];
 
+// "A governed foundation" — jeen's 4-up principles grid, mapped to how Bar
+// builds. Role-independent (does not duplicate the role-swapping FIT band).
+type Found = { accent: 'lilac' | 'coral' | 'amber' | 'plum'; k: string; d: string };
+const FOUNDATION: Found[] = [
+  {
+    accent: 'lilac',
+    k: 'Automations around models',
+    d: 'Prompts and agent pipelines wired into working automations, with an MCP server and editor plugins shipped on npm.',
+  },
+  {
+    accent: 'coral',
+    k: 'Grounded and verified',
+    d: 'Retrieval plus evals that treat model output as a testable property, including entailer for checking an answer actually follows.',
+  },
+  {
+    accent: 'amber',
+    k: 'Built to reach production',
+    d: 'Docker, Kubernetes, and CI/CD carry the work from a prompt to a deployed, running product, not a demo.',
+  },
+  {
+    accent: 'plum',
+    k: 'One person, full range',
+    d: 'Product, services, and DevOps owned end to end, in Hebrew and English, as the primary developer at a five-person startup.',
+  },
+];
+
 export default function JeenApp() {
   const scope = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
@@ -661,6 +687,29 @@ export default function JeenApp() {
             Languages and tools: {MARQUEE.join(', ')}.
           </p>
         </div>
+
+        {/* ── A governed foundation (jeen's 4-up principles grid) ── */}
+        <section className="ja-section ja-section--foundation">
+          <div className="ja-wrap">
+            <header className="ja-section__head" data-reveal>
+              <p className="ja-kicker">How I build</p>
+              <h2 className="ja-h2">A foundation for AI that actually ships.</h2>
+              <p className="ja-sub">
+                Governed, grounded, and shipped to production: the parts of AI
+                engineering that decide whether it survives contact with real users.
+              </p>
+            </header>
+            <div className="ja-found__grid">
+              {FOUNDATION.map((f) => (
+                <article className="ja-found__card" data-reveal key={f.k}>
+                  <span className={`ja-found__tile ja-found__tile--${f.accent}`} aria-hidden="true" />
+                  <h3 className="ja-found__k">{f.k}</h3>
+                  <p className="ja-found__d">{f.d}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* ── Signature piece: from prompt to governed answer ── */}
         <section id="demo" className="ja-section ja-section--soft">

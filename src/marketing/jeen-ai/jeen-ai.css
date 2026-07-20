@@ -482,6 +482,51 @@
   to { transform: translateX(-50%); }
 }
 
+/* ── "A governed foundation" 4-up grid ─────────────────────── */
+.ja-section--foundation { background: var(--ja-bg); }
+.ja-found__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-block-start: 44px;
+}
+.ja-found__card {
+  padding: 26px 22px 28px;
+  background: var(--ja-surface);
+  border: 1px solid var(--ja-line);
+  border-radius: 20px;
+  box-shadow: var(--ja-shadow-soft);
+}
+.ja-found__tile {
+  display: block;
+  inline-size: 30px;
+  block-size: 30px;
+  border-radius: 9px;
+  margin-block-end: 18px;
+}
+.ja-found__tile--lilac { background: var(--ja-lilac); }
+.ja-found__tile--coral { background: var(--ja-coral); }
+.ja-found__tile--amber { background: var(--ja-amber); }
+.ja-found__tile--plum { background: var(--ja-plum); }
+.ja-found__k {
+  font-size: 1.12rem;
+  line-height: 1.25;
+  color: var(--ja-ink);
+  margin: 0 0 8px;
+}
+.ja-found__d {
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--ja-body);
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .ja-found__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .ja-found__grid { grid-template-columns: 1fr; }
+}
+
 /* ── Sections ──────────────────────────────────────────────── */
 .ja-section { padding-block: 100px; }
 .ja-section--soft { background: var(--ja-surface); border-block: 1px solid var(--ja-line); }
