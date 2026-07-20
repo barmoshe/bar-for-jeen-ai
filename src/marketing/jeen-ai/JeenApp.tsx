@@ -515,7 +515,7 @@ export default function JeenApp() {
       }
       pos.x += (target.x - pos.x) * 0.045;
       pos.y += (target.y - pos.y) * 0.045;
-      const mask = `radial-gradient(38rem 24rem at ${(pos.x * 100).toFixed(2)}% ${(pos.y * 100).toFixed(2)}%, #000 0%, transparent 100%)`;
+      const mask = `radial-gradient(17rem 24rem at ${(pos.x * 100).toFixed(2)}% ${(pos.y * 100).toFixed(2)}%, #000 0%, transparent 100%)`;
       blob.style.maskImage = mask;
       blob.style.webkitMaskImage = mask;
     };

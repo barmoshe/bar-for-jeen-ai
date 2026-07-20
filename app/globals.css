@@ -1,7 +1,7 @@
-/* Minimal document base. The page surface is painted by `.tn-root` in
-   src/marketing/tenable/tenable.css; here we only zero the document margins
-   and set the dark charcoal behind the app so there is no white flash before
-   the React tree mounts. */
+/* Minimal document base. The page surface is painted by `.ja-root` in
+   src/marketing/jeen-ai/jeen-ai.css; here we only zero the document margins
+   and set Jeen's cream behind the app so there is no flash (and no dark UA
+   form controls) before the React tree mounts. */
 html,
 body {
   margin: 0;
@@ -9,8 +9,8 @@ body {
 }
 
 html {
-  background: #15181d; /* --tn-bg */
-  color-scheme: dark;
+  background: #fbf8f6; /* --ja-bg cream */
+  color-scheme: light;
 }
 
 body {
