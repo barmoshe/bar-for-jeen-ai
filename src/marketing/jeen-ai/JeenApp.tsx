@@ -430,6 +430,18 @@ export default function JeenApp() {
   // stable; the hash is read on mount.
   const [active, setActive] = useState<RoleId>('solutions');
 
+  // Mobile nav sheet (jeen uses a hamburger; our IA is three anchors, so the
+  // sheet mirrors the desktop links rather than inventing a mega-menu).
+  const [navOpen, setNavOpen] = useState(false);
+  useEffect(() => {
+    if (!navOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setNavOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [navOpen]);
+
   useEffect(() => {
     const fromHash = () => {
       const h = window.location.hash.replace('#', '');
@@ -550,6 +562,27 @@ export default function JeenApp() {
               <span className="ja-nav__full">Start a conversation</span>
               <span className="ja-nav__short">Let’s talk</span>
             </a>
+          </div>
+          <button
+            type="button"
+            className="ja-nav__burger"
+            aria-label={navOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={navOpen}
+            aria-controls="ja-nav-sheet"
+            onClick={() => setNavOpen((v) => !v)}
+          >
+            <span className={`ja-burger${navOpen ? ' is-open' : ''}`} aria-hidden="true">
+              <span /><span /><span />
+            </span>
+          </button>
+        </div>
+        <div id="ja-nav-sheet" className={`ja-nav__sheet${navOpen ? ' is-open' : ''}`} hidden={!navOpen}>
+          <a className="ja-nav__slink" href="#demo" onClick={() => setNavOpen(false)}>Demo</a>
+          <a className="ja-nav__slink" href="#work" onClick={() => setNavOpen(false)}>Work</a>
+          <a className="ja-nav__slink" href="#fit" onClick={() => setNavOpen(false)}>Why me</a>
+          <div className="ja-nav__sheet-cta">
+            <a className="ja-btn ja-btn--ghost ja-btn--sm" href={CV} target="_blank" rel="noopener noreferrer" onClick={() => setNavOpen(false)}>Download CV</a>
+            <a className="ja-btn ja-btn--ink ja-btn--sm" href={EMAIL} onClick={() => setNavOpen(false)}>Start a conversation</a>
           </div>
         </div>
       </header>

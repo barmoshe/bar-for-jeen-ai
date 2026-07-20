@@ -17,9 +17,10 @@ export const contentType = 'image/png';
 function Tiles({ size: s = 46 }: { size?: number }) {
   return (
     <svg width={s} height={s} viewBox="0 0 100 100">
-      <rect x="10" y="34" width="34" height="56" rx="10" fill="#e7b5ea" />
-      <rect x="10" y="10" width="34" height="18" rx="8" fill="#f0a653" />
-      <rect x="52" y="10" width="38" height="52" rx="11" fill="#e96a4c" />
+      {/* Mirrors JeenMark.tsx (tall lilac left, coral TR, amber BR). Keep in sync. */}
+      <rect x="10" y="12" width="36" height="76" rx="11" fill="#e7b5ea" />
+      <rect x="54" y="12" width="36" height="40" rx="11" fill="#e96a4c" />
+      <rect x="54" y="60" width="36" height="28" rx="9" fill="#f0a653" />
     </svg>
   );
 }

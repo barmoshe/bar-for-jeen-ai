@@ -171,11 +171,79 @@
 .ja-nav__link:hover { color: var(--ja-ink); background: var(--ja-tint); }
 .ja-nav__cta { display: flex; align-items: center; gap: 8px; }
 .ja-nav__short { display: none; }
+
+/* Hamburger — hidden on desktop, the only nav control on mobile */
+.ja-nav__burger {
+  display: none;
+  margin-inline-start: auto;
+  inline-size: 42px;
+  block-size: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ja-line);
+  background: var(--ja-surface);
+  border-radius: 12px;
+  cursor: pointer;
+  color: var(--ja-ink);
+}
+.ja-burger { position: relative; display: block; inline-size: 18px; block-size: 12px; }
+.ja-burger span {
+  position: absolute;
+  inset-inline: 0;
+  block-size: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.22s ease, opacity 0.18s ease;
+}
+.ja-burger span:nth-child(1) { inset-block-start: 0; }
+.ja-burger span:nth-child(2) { inset-block-start: 5px; }
+.ja-burger span:nth-child(3) { inset-block-start: 10px; }
+.ja-burger.is-open span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.ja-burger.is-open span:nth-child(2) { opacity: 0; }
+.ja-burger.is-open span:nth-child(3) { transform: translateY(-5px) rotate(-45deg); }
+
+/* Mobile sheet under the pill */
+.ja-nav__sheet {
+  pointer-events: auto;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  max-inline-size: 1060px;
+  margin: 8px auto 0;
+  padding: 12px;
+  background: var(--ja-surface);
+  border: 1px solid rgba(234, 228, 223, 0.7);
+  border-radius: 22px;
+  box-shadow: 0 18px 44px -28px rgba(51, 25, 37, 0.35);
+}
+.ja-nav__sheet.is-open { display: flex; }
+.ja-root a.ja-nav__slink,
+.ja-nav__slink {
+  color: var(--ja-ink);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 12px 14px;
+  border-radius: 12px;
+}
+.ja-root a.ja-nav__slink:hover,
+.ja-nav__slink:hover { background: var(--ja-tint); }
+.ja-nav__sheet-cta {
+  display: flex;
+  gap: 8px;
+  margin-block-start: 6px;
+  padding-block-start: 10px;
+  border-block-start: 1px solid var(--ja-line);
+}
+.ja-nav__sheet-cta .ja-btn { flex: 1; justify-content: center; }
+
 @media (max-width: 860px) {
   .ja-nav__links { display: none; }
-  .ja-nav__full { display: none; }
-  .ja-nav__short { display: inline; }
+  .ja-nav__cta { display: none; }
   .ja-nav__tag { display: none; }
+  .ja-nav__burger { display: inline-flex; }
+}
+@media (min-width: 861px) {
+  .ja-nav__sheet { display: none !important; }
 }
 
 /* ── Buttons — Jeen's 50px pills ───────────────────────────── */
