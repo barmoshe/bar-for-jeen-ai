@@ -19,13 +19,25 @@ Not affiliated with Jeen.AI. `robots: noindex` — a private, shareable link.
 
 ## Design
 
-The page is a faithful reinvention of jeen.ai's actual site: a masked-swirl
-cursor hero, a scrolling skill marquee (jeen's logo strip, rendered as the tools
-Bar works in), a 4-up "governed foundation" principles grid, an interactive
-platform-layer demo, a dark-plum band, and honest stat/proof sections. The
-reinvention is landing section by section (see the workshop's living plan); the
-hero, nav, mark, marquee, and foundation grid are in; the platform diagram,
-dark-band, and results sections are in progress.
+The page is a faithful reinvention of jeen.ai's actual site (captured live in the
+browser), section for section:
+
+- **Masked-swirl cursor hero** — a baked SVG `feTurbulence` swirl (`public/swirl.svg`)
+  revealed through a portrait radial-gradient mask that tracks the pointer.
+- **Skill marquee** — jeen's scrolling logo strip, rendered as the tools Bar works in.
+- **"A governed foundation" 4-up grid** — jeen's principles grid, mapped to how he builds.
+- **"One foundation" platform-layer diagram** — an enterprise AI request descending
+  through five numbered layers (prompt → routing → retrieval → governance → cited
+  answer), converging on a grounded foundation. A live state machine, reduced-motion aware.
+- **Dark-plum band** — jeen's industry marquee, mapped to Bar's competency domains,
+  above the per-role fit cards.
+- **"Proven results" stat counters** — honest, verifiable numbers with a scroll-in count-up.
+- **"Recognized" callout** — jeen's testimonial slot, filled with real external
+  validation (Temporal Code Exchange), then the swirl-washed close band.
+
+Palette and type match jeen's real brand: cream/ink/lilac/plum, Hanken Grotesk +
+Inter (free near-matches for BrittiSans + AktivGrotesk). All motion is gated on
+`prefers-reduced-motion`.
 
 ## Stack
 
