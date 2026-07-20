@@ -26,16 +26,18 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-// Ad-hoc, personalized application page for Bar Moshe's "Full Stack Engineer"
-// application to Jeen.AI (R&D, Tel Aviv). Speaks Jeen's own language (the
-// enterprise AI operating layer: agents, workflows, governed knowledge, any
-// cloud or air-gapped on-prem) and makes the case for Bar inside it. Built
+// Ad-hoc, personalized application page for Bar Moshe's two applications to
+// Jeen.AI, on one page with a hero role toggle: AI Solution Engineer (Projects,
+// the default face) and Full Stack Engineer (R&D). Speaks Jeen's own language
+// (the enterprise AI operating layer: agents, workflows, governed knowledge,
+// any cloud or air-gapped on-prem) and makes the case for Bar inside it. Built
 // embedded in the workshop site as a sanctioned exception (ADR 0141), then
-// extracted to this standalone sibling per the ADR-0132 recipe. Noindex, a
-// private shareable link for the Jeen team.
-const ogTitle = "Bar Moshe × Jeen AI — Full Stack Engineer";
+// extracted to this standalone sibling per the ADR-0132 recipe. The document
+// title swaps to the active role client-side; this static metadata leads with
+// the default. Noindex, a private shareable link for the Jeen team.
+const ogTitle = "Bar Moshe × Jeen AI — AI Solution Engineer";
 const ogDescription =
-  "Bar Moshe, full stack engineer in Tel Aviv. React, Next.js, TypeScript, Node; Docker and Kubernetes; open-source AI tooling on npm; featured on Temporal's Code Exchange.";
+  "Bar Moshe in Tel Aviv, applying to Jeen.AI. Prompt engineering, LLM automations, and AI-output QA, with the Python and full-stack work to ship it. Open-source AI tooling on npm; featured on Temporal's Code Exchange.";
 
 // noindex (private, shareable link) but a rich share card still renders for
 // direct shares (email / DM / LinkedIn); og:image comes from the colocated

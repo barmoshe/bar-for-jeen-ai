@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap, useGSAP, FULL_MOTION_QUERY } from '../../lib/gsap';
 import JeenMark from './JeenMark';
 import GovernedAnswer from './GovernedAnswer';
@@ -8,9 +8,16 @@ import './marketing-base.css';
 import './jeen-ai.css';
 
 /**
- * JeenApp — an ad-hoc, personalized application page for Bar Moshe's
- * "Full Stack Engineer" application to Jeen.AI (R&D, Tel Aviv). Built in
- * Jeen's REAL visual language, read live off jeen.ai (computed styles,
+ * JeenApp — an ad-hoc, personalized application page for Bar Moshe's two
+ * applications to Jeen.AI, presented on one page with a hero role toggle:
+ * "AI Solution Engineer" (Projects, the default face) and "Full Stack
+ * Engineer" (R&D, the earlier application). A distinct role at an existing
+ * company is another opportunity on the same account, so the company research,
+ * brand, proof of work, and the governed-answer demo are shared; only the
+ * hero, the fit band, and the closing copy swap. Deep-linkable via
+ * `#full-stack-engineer` / `#ai-solution-engineer`.
+ *
+ * Built in Jeen's REAL visual language, read live off jeen.ai (computed styles,
  * 2026-07-02): cream surface, ink type at display weight 400, 50px pills
  * (lilac primary, white outline, ink nav pill), a floating white pill nav,
  * a deep-plum dark band, and the signature hero "liquid" — a pastel
@@ -27,9 +34,9 @@ import './jeen-ai.css';
  * (the ADR-0132 pattern); the embedded route now 308s here.
  */
 
-const EMAIL =
-  'mailto:1barmoshe1@gmail.com?subject=Full%20Stack%20Engineer%20application%20from%20Bar%20Moshe';
 const CV = '/Bar_Moshe_CV_JeenAI.pdf';
+const mailto = (subject: string) =>
+  `mailto:1barmoshe1@gmail.com?subject=${encodeURIComponent(subject)}`;
 
 type Proof = {
   tag: string;
@@ -279,7 +286,34 @@ const PROOF_GROUPS: ProofGroup[] = [
 
 type Fit = { k: string; lead: string; body: string };
 
-const FIT: Fit[] = [
+// Fit for the AI Solution Engineer role (Projects): prompt engineering,
+// automations, Python/SQL, AI-output QA, and bilingual cross-functional range.
+const FIT_SOLUTIONS: Fit[] = [
+  {
+    k: 'Prompt engineering and automations',
+    lead: 'Design prompts, wire LLMs into automations.',
+    body: 'A daily practice, shown in public: MDP on npm ships with an MCP server and editor plugins, a Temporal plugin runs durable agent workflows, and a REST API chains LLM calls with retries and validation. Building automations around models is the work, not a side interest.',
+  },
+  {
+    k: 'Python, SQL, and data',
+    lead: 'The coding that supports the products.',
+    body: 'Python workers in a cross-language Temporal service and in a prompt-to-MIDI REST API. Comfortable reading and writing SQL over relational data and debugging the flow end to end, on top of a B.Sc. in Computer Science.',
+  },
+  {
+    k: 'AI quality and evaluation',
+    lead: 'QA on model output, meticulously.',
+    body: 'Treats AI output as a testable property. entailer, an open-source toolkit, checks whether an answer’s conclusion actually follows from its premises; evals are part of daily work. The attention to detail the role asks for, aimed at the parts of AI that quietly break.',
+  },
+  {
+    k: 'Range and communication',
+    lead: 'Hebrew and English, across the team.',
+    body: 'Native Hebrew and fluent English. Sole primary developer at a five-person startup means constant work across product, design, and engineering. Builds the front ends too, so interface design is part of the reasoning, not an afterthought.',
+  },
+];
+
+// Fit for the Full Stack Engineer role (R&D): full-stack, GenAI integration,
+// services/data, and DevOps.
+const FIT_FS: Fit[] = [
   {
     k: 'Full-stack development',
     lead: 'React, Next.js, TypeScript, Node.js.',
@@ -302,10 +336,124 @@ const FIT: Fit[] = [
   },
 ];
 
+type RoleId = 'solutions' | 'fullstack';
+
+type Role = {
+  hash: string;
+  tab: string;
+  docTitle: string;
+  titleA: string;
+  titleB: React.ReactNode;
+  lede: React.ReactNode;
+  trust: React.ReactNode;
+  fit: Fit[];
+  ctaSub: string;
+  footerTag: string;
+  emailSubject: string;
+};
+
+const ROLES: Record<RoleId, Role> = {
+  solutions: {
+    hash: 'ai-solution-engineer',
+    tab: 'AI Solution Engineer',
+    docTitle: 'Bar Moshe × Jeen AI — AI Solution Engineer',
+    titleA: 'Bar Moshe. From prompt',
+    titleB: (
+      <>
+        to <span className="ja-hl">reliable AI output</span>
+      </>
+    ),
+    lede: (
+      <>
+        Prompt engineering and LLM automation as a daily practice: MCP tooling and
+        agent pipelines on npm, evals that treat model output as a testable property,
+        and the Python and full-stack work to ship it. Currently the primary developer
+        at Joomsy, an early-stage startup.
+      </>
+    ),
+    trust: (
+      <>
+        <strong>B.Sc. Computer Science</strong>, Afeka College · Python · SQL · Prompt
+        engineering · Hebrew &amp; English
+      </>
+    ),
+    fit: FIT_SOLUTIONS,
+    ctaSub:
+      'If this background fits the AI Solution Engineer role, I would be glad to continue the conversation. Based in Tel Aviv.',
+    footerTag:
+      'An application page Bar Moshe built for the AI Solution Engineer role at Jeen.AI, Tel Aviv. Not affiliated with Jeen.AI.',
+    emailSubject: 'AI Solution Engineer application from Bar Moshe',
+  },
+  fullstack: {
+    hash: 'full-stack-engineer',
+    tab: 'Full Stack Engineer',
+    docTitle: 'Bar Moshe × Jeen AI — Full Stack Engineer',
+    titleA: 'Bar Moshe. Full stack',
+    titleB: (
+      <>
+        engineer for <span className="ja-hl">AI products</span>
+      </>
+    ),
+    lede: (
+      <>
+        React, Next.js, TypeScript, and Node across the front end and services.
+        Docker, Kubernetes, and CI/CD to production. Currently the primary developer
+        at Joomsy, an early-stage startup. Open-source AI tooling on npm, and a service
+        featured on Temporal&rsquo;s Code Exchange.
+      </>
+    ),
+    trust: (
+      <>
+        <strong>B.Sc. Computer Science</strong>, Afeka College · TypeScript · Python ·
+        Go · Tel Aviv
+      </>
+    ),
+    fit: FIT_FS,
+    ctaSub:
+      'If this background fits the Full Stack Engineer role, I would be glad to continue the conversation. Based in Tel Aviv.',
+    footerTag:
+      'An application page Bar Moshe built for the Full Stack Engineer role at Jeen.AI, Tel Aviv. Not affiliated with Jeen.AI.',
+    emailSubject: 'Full Stack Engineer application from Bar Moshe',
+  },
+};
+
+const ROLE_ORDER: RoleId[] = ['solutions', 'fullstack'];
+
 export default function JeenApp() {
   const scope = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
   const blobRef = useRef<HTMLDivElement | null>(null);
+
+  // Which role the page addresses. Default is the AI Solution Engineer face;
+  // `#full-stack-engineer` (or the toggle) swaps to the Full Stack framing.
+  // Initial render is the default on both server and client to keep hydration
+  // stable; the hash is read on mount.
+  const [active, setActive] = useState<RoleId>('solutions');
+
+  useEffect(() => {
+    const fromHash = () => {
+      const h = window.location.hash.replace('#', '');
+      const match = ROLE_ORDER.find((id) => ROLES[id].hash === h);
+      if (match) setActive(match);
+    };
+    fromHash();
+    window.addEventListener('hashchange', fromHash);
+    return () => window.removeEventListener('hashchange', fromHash);
+  }, []);
+
+  useEffect(() => {
+    document.title = ROLES[active].docTitle;
+  }, [active]);
+
+  const selectRole = (id: RoleId) => {
+    setActive(id);
+    if (window.location.hash.replace('#', '') !== ROLES[id].hash) {
+      history.replaceState(null, '', `#${ROLES[id].hash}`);
+    }
+  };
+
+  const role = ROLES[active];
+  const EMAIL = mailto(role.emailSubject);
 
   useGSAP(
     () => {
@@ -416,18 +564,28 @@ export default function JeenApp() {
             <div className="ja-hero__copy">
               <p className="ja-eyebrow" data-rise>
                 <span className="ja-eyebrow__dot" />
-                FULL STACK ENGINEER APPLICATION · TEL AVIV
+                APPLICATION · JEEN.AI · TEL AVIV
               </p>
+              <div className="ja-roletabs" role="group" aria-label="Choose the role this page addresses" data-rise>
+                {ROLE_ORDER.map((id) => (
+                  <button
+                    key={id}
+                    type="button"
+                    className={`ja-roletab${active === id ? ' is-active' : ''}`}
+                    aria-pressed={active === id}
+                    onClick={() => selectRole(id)}
+                  >
+                    {ROLES[id].tab}
+                  </button>
+                ))}
+              </div>
               <h1 className="ja-title" data-rise>
-                Bar Moshe. Full stack
+                {role.titleA}
                 <br />
-                engineer for <span className="ja-hl">AI products</span>
+                {role.titleB}
               </h1>
               <p className="ja-lede" data-rise>
-                React, Next.js, TypeScript, and Node across the front end and services.
-                Docker, Kubernetes, and CI/CD to production. Currently the primary
-                developer at Joomsy, an early-stage startup. Open-source AI tooling on
-                npm, and a service featured on Temporal&rsquo;s Code Exchange.
+                {role.lede}
               </p>
               <div className="ja-hero__cta" data-rise>
                 <a className="ja-btn ja-btn--primary" href={EMAIL}>
@@ -439,7 +597,7 @@ export default function JeenApp() {
                 </a>
               </div>
               <p className="ja-hero__trust" data-rise>
-                <strong>B.Sc. Computer Science</strong>, Afeka College · TypeScript · Python · Go · Tel Aviv
+                {role.trust}
               </p>
             </div>
           </div>
@@ -543,7 +701,7 @@ export default function JeenApp() {
               <h2 className="ja-h2">Background, mapped to the role.</h2>
             </header>
             <div className="ja-fit__grid">
-              {FIT.map((f, i) => (
+              {role.fit.map((f, i) => (
                 <article className="ja-fcard" key={f.k} data-reveal>
                   <span className="ja-fcard__no" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                   <h3 className="ja-fcard__k">{f.k}</h3>
@@ -560,10 +718,7 @@ export default function JeenApp() {
           <div className="ja-cta__inner" data-reveal>
             <JeenMark className="ja-cta__mark" float />
             <h2 className="ja-cta__title">Let’s talk.</h2>
-            <p className="ja-cta__sub">
-              If this background fits the Full Stack Engineer role, I would be glad
-              to continue the conversation. Based in Tel Aviv.
-            </p>
+            <p className="ja-cta__sub">{role.ctaSub}</p>
             <div className="ja-cta__links">
               <a className="ja-btn ja-btn--oninvert" href={EMAIL}>Email me</a>
               <a className="ja-btn ja-btn--oninvert-ghost" href="https://www.linkedin.com/in/barmoshe/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -582,10 +737,7 @@ export default function JeenApp() {
               <JeenMark className="ja-nav__mark" />
               <span className="ja-wordmark">Bar Moshe</span>
             </span>
-            <p className="ja-footer__tag">
-              An application page Bar Moshe built for the Full Stack Engineer role
-              at Jeen.AI, Tel Aviv. Not affiliated with Jeen.AI.
-            </p>
+            <p className="ja-footer__tag">{role.footerTag}</p>
           </div>
           <div className="ja-footer__col">
             <p className="ja-footer__h">The work</p>

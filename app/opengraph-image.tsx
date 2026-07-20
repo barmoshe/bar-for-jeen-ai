@@ -9,7 +9,7 @@ import { ImageResponse } from 'next/og';
 // twitter:image tags automatically.
 
 export const alt =
-  'Bar Moshe for Jeen AI — Full Stack Engineer. React, Next.js, TypeScript, Node; Docker and Kubernetes; open-source AI tooling on npm.';
+  'Bar Moshe for Jeen AI — AI Solution Engineer. Prompt engineering, LLM automations, and AI-output QA; open-source AI tooling on npm.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -85,10 +85,10 @@ export default function Image() {
                 maxWidth: '1010px',
               }}
             >
-              Full stack engineer for AI products.
+              From prompt to reliable AI output.
             </div>
             <div style={{ display: 'flex', fontSize: 30, color: '#4c4747', marginTop: '22px', maxWidth: '940px', lineHeight: 1.35 }}>
-              React, Next.js, TypeScript, Node. Docker and Kubernetes. Open-source AI tooling on npm, featured on Temporal Code Exchange.
+              Prompt engineering, LLM automations, and AI-output QA. Open-source AI tooling on npm, featured on Temporal Code Exchange.
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export default function Image() {
                 color: '#232122',
               }}
             >
-              Full Stack Engineer · R&D · Tel Aviv
+              AI Solution Engineer · Jeen.AI · Tel Aviv
             </div>
           </div>
         </div>

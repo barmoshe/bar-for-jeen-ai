@@ -298,6 +298,44 @@
   border-radius: 3px;
   background: var(--ja-coral);
 }
+/* ── Role toggle — one page, two applications ──────────────── */
+.ja-roletabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid var(--ja-line);
+  background: var(--ja-surface);
+  border-radius: 999px;
+  box-shadow: var(--ja-shadow-soft);
+  margin-block-end: 26px;
+}
+.ja-roletab {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ja-muted);
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.ja-roletab:hover { color: var(--ja-ink); }
+.ja-roletab.is-active {
+  background: var(--ja-ink);
+  color: var(--ja-on-dark);
+}
+.ja-roletab:focus-visible {
+  outline: 2px solid var(--ja-raspberry);
+  outline-offset: 2px;
+}
+@media (max-width: 460px) {
+  .ja-roletabs { width: 100%; }
+  .ja-roletab { flex: 1; padding: 10px 12px; font-size: 0.84rem; }
+}
+
 .ja-title {
   /* Jeen: 72px / 1.1, weight 400, near-normal tracking. */
   font-size: clamp(2.5rem, 6.4vw, 4.5rem);
