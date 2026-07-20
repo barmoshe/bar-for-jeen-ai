@@ -419,6 +419,15 @@ const ROLES: Record<RoleId, Role> = {
 
 const ROLE_ORDER: RoleId[] = ['solutions', 'fullstack'];
 
+// Skill marquee — jeen.ai runs a scrolling customer-logo strip; Bar has no
+// customer logos to show, so this is an honest strip of the languages and tools
+// he actually works in. Uniform wordmarks read like a logo strip.
+const MARQUEE = [
+  'TypeScript', 'Python', 'Go', 'React', 'Next.js', 'Node.js', 'MCP',
+  'Temporal', 'OpenAI', 'Docker', 'Kubernetes', 'npm', 'Evals',
+  'Prompt engineering', 'CI/CD',
+];
+
 export default function JeenApp() {
   const scope = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
@@ -636,17 +645,21 @@ export default function JeenApp() {
           </div>
         </section>
 
-        {/* ── Trust strip ───────────────────────────────────── */}
+        {/* ── Skill marquee (jeen's logo strip, honest tech) ──── */}
         <div className="ja-trust">
-          <div className="ja-trust__inner">
-            <span className="ja-trust__item"><b>MCP server</b> for Claude Code &amp; Codex</span>
-            <span className="ja-trust__sep" />
-            <span className="ja-trust__item">Open source, <b>on npm</b></span>
-            <span className="ja-trust__sep" />
-            <span className="ja-trust__item">Featured on <b>Temporal Code Exchange</b></span>
-            <span className="ja-trust__sep" />
-            <span className="ja-trust__item">React · TypeScript · Node · Go · Python</span>
+          <div className="ja-marquee" aria-hidden="true">
+            <div className="ja-marquee__track">
+              {[...MARQUEE, ...MARQUEE].map((m, i) => (
+                <span className="ja-marquee__item" key={i}>
+                  {m}
+                  <span className="ja-marquee__dot" />
+                </span>
+              ))}
+            </div>
           </div>
+          <p className="visually-hidden">
+            Languages and tools: {MARQUEE.join(', ')}.
+          </p>
         </div>
 
         {/* ── Signature piece: from prompt to governed answer ── */}

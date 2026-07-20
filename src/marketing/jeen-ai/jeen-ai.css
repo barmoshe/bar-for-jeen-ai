@@ -441,28 +441,46 @@
 }
 .ja-hero__trust strong { color: var(--ja-ink); font-weight: 600; }
 
-/* ── Trust strip — quiet, logo-strip register ──────────────── */
+/* ── Skill marquee — jeen's scrolling logo strip ───────────── */
 .ja-trust { border-block: 1px solid var(--ja-line); background: var(--ja-bg); }
-.ja-trust__inner {
-  max-inline-size: 1160px;
-  margin-inline: auto;
-  padding: 18px 22px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 14px 22px;
-  font-size: 0.88rem;
-  color: var(--ja-muted);
+.ja-marquee {
+  overflow: hidden;
+  padding-block: 16px;
+  /* fade the edges into the cream, like jeen's strip */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
-.ja-trust__item b { color: var(--ja-ink); font-weight: 600; }
-.ja-trust__sep {
+.ja-marquee__track {
+  display: flex;
+  inline-size: max-content;
+  align-items: center;
+  will-change: transform;
+}
+.ja-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+  padding-inline: 15px;
+  font-family: var(--ja-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: var(--ja-muted);
+  white-space: nowrap;
+}
+.ja-marquee__dot {
   inline-size: 4px;
   block-size: 4px;
   border-radius: 50%;
   background: var(--ja-line-2);
 }
-@media (max-width: 640px) { .ja-trust__sep { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .ja-marquee__track { animation: ja-marquee 42s linear infinite; }
+  .ja-marquee:hover .ja-marquee__track { animation-play-state: paused; }
+}
+@keyframes ja-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 /* ── Sections ──────────────────────────────────────────────── */
 .ja-section { padding-block: 100px; }
