@@ -715,13 +715,13 @@ export default function JeenApp() {
         <section id="demo" className="ja-section ja-section--soft">
           <div className="ja-wrap">
             <header className="ja-section__head" data-reveal>
-              <p className="ja-kicker">Working demo</p>
-              <h2 className="ja-h2">A governed answer pipeline, built for this page.</h2>
+              <p className="ja-kicker">One foundation</p>
+              <h2 className="ja-h2">The operating layer, visualized.</h2>
               <p className="ja-sub">
-                An interactive model of an enterprise AI flow: prompt, model routing,
-                retrieval from organizational sources, a policy gate, and a cited
-                answer. Written from scratch in React for this application, reduced
-                motion supported.
+                A live diagram of an enterprise AI request descending through the
+                stack: prompt, model routing, retrieval and grounding, a governance
+                gate, and a cited answer, converging on a grounded foundation. Built
+                from scratch in React for this page, reduced motion supported.
               </p>
             </header>
             <div data-reveal>
