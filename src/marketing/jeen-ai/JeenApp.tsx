@@ -428,6 +428,14 @@ const MARQUEE = [
   'Prompt engineering', 'CI/CD',
 ];
 
+// Competency domains for the dark-plum band marquee (jeen's "Where enterprise
+// AI actually runs" industry strip, mapped to where Bar's work lives).
+const COMPETENCIES = [
+  'Prompt engineering', 'Agents & orchestration', 'Evals & QA', 'MCP tooling',
+  'RAG & retrieval', 'Full-stack · React/Node', 'Python & SQL',
+  'DevOps · Docker/K8s', 'Temporal workflows', 'Bilingual · HE/EN',
+];
+
 // "A governed foundation" — jeen's 4-up principles grid, mapped to how Bar
 // builds. Role-independent (does not duplicate the role-swapping FIT band).
 type Found = { accent: 'lilac' | 'coral' | 'amber' | 'plum'; k: string; d: string };
@@ -792,9 +800,20 @@ export default function JeenApp() {
         <section id="fit" className="ja-section ja-section--plum">
           <div className="ja-wrap">
             <header className="ja-section__head" data-reveal>
-              <p className="ja-kicker">Experience and skills</p>
+              <p className="ja-kicker">Where the work runs</p>
               <h2 className="ja-h2">Background, mapped to the role.</h2>
             </header>
+            <div className="ja-marquee ja-marquee--dark" aria-hidden="true">
+              <div className="ja-marquee__track">
+                {[...COMPETENCIES, ...COMPETENCIES].map((c, i) => (
+                  <span className="ja-marquee__item" key={i}>
+                    {c}
+                    <span className="ja-marquee__dot" />
+                  </span>
+                ))}
+              </div>
+            </div>
+            <p className="visually-hidden">Competency domains: {COMPETENCIES.join(', ')}.</p>
             <div className="ja-fit__grid">
               {role.fit.map((f, i) => (
                 <article className="ja-fcard" key={f.k} data-reveal>
