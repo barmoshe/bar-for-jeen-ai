@@ -436,6 +436,48 @@ const COMPETENCIES = [
   'DevOps · Docker/K8s', 'Temporal workflows', 'Bilingual · HE/EN',
 ];
 
+// "Proven results" — jeen's animated stat counters, filled with honest,
+// stable, verifiable numbers (no years-of-experience, no growing counts).
+const STATS: { n: number; suffix?: string; k: string; d: string }[] = [
+  { n: 3, k: 'languages in one Temporal workflow', d: 'Go, Python, and TypeScript, featured on Temporal’s Code Exchange.' },
+  { n: 5, k: 'languages I build in', d: 'TypeScript, JavaScript, Python, Go, and C#.' },
+  { n: 2, k: 'agent ecosystems my tooling plugs into', d: 'Claude Code and Codex, via an MCP server published on npm.' },
+];
+
+// Count-up: SSR and reduced-motion render the final number; under full motion the
+// value animates 0 -> n once it scrolls into view (no hydration mismatch — the
+// initial DOM already holds n).
+function StatCounter({ n }: { n: number }) {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  useEffect(() => {
+    if (!matchMedia(FULL_MOTION_QUERY).matches) return;
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          io.disconnect();
+          const dur = 950;
+          const start = performance.now();
+          const tick = (t: number) => {
+            const p = Math.min(1, (t - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = String(Math.round(eased * n));
+            if (p < 1) requestAnimationFrame(tick);
+            else el.textContent = String(n);
+          };
+          requestAnimationFrame(tick);
+        });
+      },
+      { threshold: 0.6 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [n]);
+  return <span ref={ref} className="ja-stat__n">{n}</span>;
+}
+
 // "A governed foundation" — jeen's 4-up principles grid, mapped to how Bar
 // builds. Role-independent (does not duplicate the role-swapping FIT band).
 type Found = { accent: 'lilac' | 'coral' | 'amber' | 'plum'; k: string; d: string };
@@ -734,6 +776,28 @@ export default function JeenApp() {
             </header>
             <div data-reveal>
               <GovernedAnswer />
+            </div>
+          </div>
+        </section>
+
+        {/* ── Proven results (jeen's stat counters, honest numbers) ── */}
+        <section className="ja-section ja-section--stats">
+          <div className="ja-wrap">
+            <header className="ja-section__head" data-reveal>
+              <p className="ja-kicker">In numbers</p>
+              <h2 className="ja-h2">Shipped, not theoretical.</h2>
+            </header>
+            <div className="ja-stats">
+              {STATS.map((s) => (
+                <div className="ja-stat" data-reveal key={s.k}>
+                  <p className="ja-stat__val">
+                    <StatCounter n={s.n} />
+                    {s.suffix ? <span className="ja-stat__suffix">{s.suffix}</span> : null}
+                  </p>
+                  <p className="ja-stat__k">{s.k}</p>
+                  <p className="ja-stat__d">{s.d}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

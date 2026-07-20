@@ -540,6 +540,37 @@
   .ja-found__grid { grid-template-columns: 1fr; }
 }
 
+/* ── "Proven results" stat counters ────────────────────────── */
+.ja-section--stats { background: var(--ja-tint); }
+.ja-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-block-start: 40px;
+}
+.ja-stat {
+  padding: 26px 24px;
+  background: var(--ja-surface);
+  border: 1px solid var(--ja-line);
+  border-radius: 20px;
+}
+.ja-stat__val {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin: 0 0 10px;
+  font-family: var(--font-ja-display), "Hanken Grotesk", system-ui, sans-serif;
+  font-size: 3.2rem;
+  line-height: 1;
+  color: var(--ja-ink);
+}
+.ja-stat__suffix { font-size: 1.6rem; color: var(--ja-raspberry); }
+.ja-stat__k { margin: 0 0 6px; font-size: 1rem; color: var(--ja-ink); }
+.ja-stat__d { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--ja-body); }
+@media (max-width: 760px) {
+  .ja-stats { grid-template-columns: 1fr; }
+}
+
 /* ── Sections ──────────────────────────────────────────────── */
 .ja-section { padding-block: 100px; }
 .ja-section--soft { background: var(--ja-surface); border-block: 1px solid var(--ja-line); }
